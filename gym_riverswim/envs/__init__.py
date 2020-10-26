@@ -1,2 +1,1 @@
 from gym_riverswim.envs.riverswim_env import RiverSwimEnv
-from gym_riverswim.envs.riverswim_extrahard_env import RiverSwimExtraHardEnv

@@ -24,28 +24,24 @@ class RiverSwimEnv(discrete.DiscreteEnv):
         super(RiverSwimEnv, self).__init__(nS, nA, P, isd)
 
     def __init_dynamics(self, nS, nA):
+        
         # P[s][a] == [(probability, nextstate, reward, done), ...]
-        R = {}
         P = {}
-
-
         for s in range(nS):
-            for a in range(nA):
-                R[s, a] = (0, 0)
-                P[s, a] = np.zeros(self.state_num)
+            P[s] = {a: [] for a in range(nA)}
 
         # Rewarded Transitions
-        P[0, LEFT] = [(1., 0, 5/1000, 0)]
-        P[nS-1, RIGHT] = [(0.9, nS-1, 1, 0), (0.1, nS-2, 1, 0)]
+        P[0][LEFT] = [(1., 0, 5/1000, 0)]
+        P[nS-1][RIGHT] = [(0.9, nS-1, 1, 0), (0.1, nS-2, 1, 0)]
 
         # Left Transitions
         for s in range(1, nS):
-            P[s, LEFT] = [(1., max(0, s-1), 0, 0)]
+            P[s][LEFT] = [(1., max(0, s-1), 0, 0)]
 
         # RIGHT Transitions
         for s in range(1, nS - 1):
-            P[s, RIGHT] = [(0.3, min(nS - 1, s + 1), 0, 0), (0.6, s, 0, 0), (0.1, max(0, s-1), 0, 0)]
-        P[0, RIGHT] = [(0.3, 0, 0, 0), (0.7, 1, 0, 0)]
+            P[s][RIGHT] = [(0.3, min(nS - 1, s + 1), 0, 0), (0.6, s, 0, 0), (0.1, max(0, s-1), 0, 0)]
+        P[0][RIGHT] = [(0.3, 0, 0, 0), (0.7, 1, 0, 0)]
 
         # Starting State Distribution
         isd = np.zeros(nS)
