@@ -13,7 +13,7 @@ RIGHT = 1
 class RiverSwimEnv(discrete.DiscreteEnv):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, nS=5):
+    def __init__(self, nS=6):
         
         # Defining the number of actions
         nA = 2
